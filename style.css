@@ -1,0 +1,69 @@
+:root {
+    --background: #181c1f;
+    --secondary-background: #4b3f71;
+    --operator-background: #374957;
+    --text-input-background: #27343c;
+    --text-input-color: #e1e2e1;
+    --operand-background: #1d2528;
+    --equal-to-background: #014c6c;
+    --primary-color: #d5dfe8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+.main {
+    color: var(--primary-color);
+    background-color: var(--background);
+    height: auto;
+    width: 320px;
+    border-radius: 10px;
+    text-align: center;
+    margin: auto;
+}
+
+.btn {
+    height: 65px;
+    width: 65px;
+    font-size: 28px;
+}
+
+.operator,
+.clear {
+    background-color: var(--operator-background);
+    transition: 0.3s;
+}
+
+.equal-to {
+    background-color: var(--equal-to-background);
+}
+
+#clearAll,
+#clear {
+    background-color: var(--secondary-background);
+}
+
+#clearAll,
+#clear {
+    font-size: 28px;
+}
+
+.operand {
+    background-color: var(--operand-background);
+    transition: 0.3s;
+}
+
+.operator:hover,
+.operand:hover,
+.clear:hover {
+    border-radius: 15px !important;
+}
+
+#output {
+    background-color: var(--text-input-background);
+    font-size: 40;
+    color: var(--text-input-color);
+}

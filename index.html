@@ -1,0 +1,89 @@
+<!DOCTYPE htms>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container h-100">
+
+        <div class="row h-100">
+
+            <div class="col-md-12 m-auto">
+                <form action="#" name="calculator " class="main  pb-3 border border-dark-subtle">
+                    <input type="text" class="output border-0 form-control" name="output" id="output">
+                    <div class="mt-2">
+                        <button type="button" name="" class="clear btn btn-primary border-0 rounded-circle "
+                            id="clearAll" value="ac">AC</button>
+                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operator"
+                            id="bracket" value="()">()</button>
+                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operator"
+                            id="" value="%"><i class="fa-solid fa-percent"></i></button>
+                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operator"
+                            id="" value="&#247;"><i class="fa-solid fa-divide"></i></button>
+                    </div>
+                    <div class="mt-2">
+                        <button type="button" name="" class="btn btn-primary border-0 operand rounded-circle " id=""
+                            value="7"><i class="fa-solid fa-7"></i></button>
+                        <button type="button" name="" class="btn btn-primary border-0 operand rounded-circle ms-1" id=""
+                            value="8"><i class="fa-solid fa-8"></i> </button>
+                        <button type="button" name="" class="btn btn-primary border-0  operand rounded-circle ms-1"
+                            id="" value="9"><i class="fa-solid fa-9"></i></button>
+                        <button type="button" name="" class="btn btn-primary border-0 rounded-circle ms-1 operator"
+                            id="" value="&#10005;"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="mt-2">
+                        <button type="button" name="" class="btn btn-primary border-0 operand rounded-circle " id=""
+                            value="4"><i class="fa-solid fa-4"></i></button>
+                        <button type="button" name="" class="btn btn-primary border-0 operand rounded-circle ms-1" id=""
+                            value="5"><i class="fa-solid fa-5"></i></button>
+                        <button type="button" name="" class="btn btn-primary border-0 operand rounded-circle ms-1" id=""
+                            value="6"><i class="fa-solid fa-6"></i></button>
+                        <button type="button" name="" class="btn btn-primary border-0 rounded-circle ms-1 operator"
+                            id="" value="-"><i class="fa-solid fa-minus"></i> </button>
+                    </div>
+                    <div class="mt-2">
+                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operand"
+                            id="" value="1"><i class="fa-solid fa-1"></i></button>
+                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operand"
+                            id="" value="2"><i class="fa-solid fa-2"></i></button>
+                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operand"
+                            id="" value="3"><i class="fa-solid fa-3"></i></button>
+                        <button type="button" name="" class="btn btn-primary border-0 rounded-circle ms-1 operator"
+                            id="" value="+"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    <div class="mt-2">
+                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operand"
+                            id="" value="0"><i class="fa-solid fa-0"></i></button>
+                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operand"
+                            id="" value=".">.</button>
+                        <button type="button" name="" class="btn btn-primary border-0 rounded-circle ms-1  clear"
+                            id="clear" value="c"><i class="fa-solid fa-c"></i></button>
+                        <button type="button" class="btn btn-primary border-0 rounded-circle ms-1 operator equal-to"
+                            id="" value="="><i class="fa-solid fa-equals"></i></button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/fontawesome.min.js"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./app.js"></script>
+
+</body>
+
+</html>
