@@ -7,7 +7,7 @@ $(".operand").click(function () {
     let value = $(this).val();
     output.value += $(this).val();
 
-    output.focus();
+    // output.focus();
 })
 
 $(".operator").click(function () {
@@ -15,7 +15,7 @@ $(".operator").click(function () {
     if (value != '=' && value != '()') {
         output.value += $(this).val();
     }
-    output.focus();
+    // output.focus();
 })
 
 // Clear Input 
@@ -29,18 +29,20 @@ $(".clear").click(function () {
         //Clear single Char 
         output.value = output.value.slice(0, -1)
     }
-    output.focus();
+    // output.focus();
 })
 
 $("#bracket").click(function () {
     let openBracketNum = 0;
     let closeBracketNum = 0;
-    output.focus();
+    // output.focus();
 })
 
 // Evaluate Equation Here
 $(".equal-to").click(function () {
     console.log("eveluate your equation here");
+    console.log(eval(output.value));
+    output.value = eval(output.value);
 })
 
 
