@@ -1,89 +1,130 @@
-<!DOCTYPE htms>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="./style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" crossorigin="anonymous"
-        referrerpolicy="no-referrer"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <div class="container h-100">
-
-        <div class="row h-100">
-
-            <div class="col-md-12 m-auto">
-                <form action="#" name="calculator " class="main  pb-3 border border-dark-subtle">
-                    <input type="text" class="output border-0 form-control" name="output" id="output">
-                    <div class="mt-2">
-                        <button type="button" name="" class="clear btn btn-primary border-0 rounded-circle "
-                            id="clearAll" value="ac">AC</button>
-                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operator"
-                            id="bracket" value="()">()</button>
-                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operator"
-                            id="" value="%"><i class="fa-solid fa-percent"></i></button>
-                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operator"
-                            id="" value="/"><i class="fa-solid fa-divide"></i></button>
-                    </div>
-                    <div class="mt-2">
-                        <button type="button" name="" class="btn btn-primary border-0 operand rounded-circle " id=""
-                            value="7"><i class="fa-solid fa-7"></i></button>
-                        <button type="button" name="" class="btn btn-primary border-0 operand rounded-circle ms-1" id=""
-                            value="8"><i class="fa-solid fa-8"></i> </button>
-                        <button type="button" name="" class="btn btn-primary border-0  operand rounded-circle ms-1"
-                            id="" value="9"><i class="fa-solid fa-9"></i></button>
-                        <button type="button" name="" class="btn btn-primary border-0 rounded-circle ms-1 operator"
-                            id="" value="*"><i class="fa-solid fa-xmark"></i></button>
-                    </div>
-                    <div class="mt-2">
-                        <button type="button" name="" class="btn btn-primary border-0 operand rounded-circle " id=""
-                            value="4"><i class="fa-solid fa-4"></i></button>
-                        <button type="button" name="" class="btn btn-primary border-0 operand rounded-circle ms-1" id=""
-                            value="5"><i class="fa-solid fa-5"></i></button>
-                        <button type="button" name="" class="btn btn-primary border-0 operand rounded-circle ms-1" id=""
-                            value="6"><i class="fa-solid fa-6"></i></button>
-                        <button type="button" name="" class="btn btn-primary border-0 rounded-circle ms-1 operator"
-                            id="" value="-"><i class="fa-solid fa-minus"></i> </button>
-                    </div>
-                    <div class="mt-2">
-                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operand"
-                            id="" value="1"><i class="fa-solid fa-1"></i></button>
-                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operand"
-                            id="" value="2"><i class="fa-solid fa-2"></i></button>
-                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operand"
-                            id="" value="3"><i class="fa-solid fa-3"></i></button>
-                        <button type="button" name="" class="btn btn-primary border-0 rounded-circle ms-1 operator"
-                            id="" value="+"><i class="fa-solid fa-plus"></i></button>
-                    </div>
-                    <div class="mt-2">
-                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operand"
-                            id="" value="0"><i class="fa-solid fa-0"></i></button>
-                        <button type="button" name="" class="btn btn-primary border-0  rounded-circle ms-1 operand"
-                            id="" value=".">.</button>
-                        <button type="button" name="" class="btn btn-primary border-0 rounded-circle ms-1  clear"
-                            id="clear" value="c"><i class="fa-solid fa-c"></i></button>
-                        <button type="button" class="btn btn-primary border-0 rounded-circle ms-1 operator equal-to"
-                            id="" value="="><i class="fa-solid fa-equals"></i></button>
-
-                    </div>
-                </form>
-            </div>
-        </div>
+  <div class="container">
+    <!-- Display Of Calculator -->
+    <div class="display">
+      <input type="text" id="output" placeholder="0">
+    </div>
+    <!-- Buttons Of Calculator -->
+    <div class="row">
+      <button type="button" class="btn btn-light btn-deg" onclick="deg()">DEG</button>
+      <button type="button" class="btn btn-light btn-fe" onclick="fixedExpo()">F-E</button>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/fontawesome.min.js"
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="./app.js"></script>
+    <div class="row">
+      <button type="button" class="btn btn-light btn-m btn-l" onclick="mcFunc()">MC</button>
+      <button type="button" class="btn btn-light btn-m btn-l" onclick="mrFunc()">MR</button>
+      <button type="button" class="btn btn-light btn-m btn-b" onclick="mpFunc()">M+</button>
+      <button type="button" class="btn btn-light btn-m btn-b" onclick="mmFunc()">M-</button>
+      <button type="button" class="btn btn-light btn-m btn-b" onclick="msFunc()">MS</button>
+    </div>
 
+    <div class="row">
+
+      <select id="trigno" name="trignometry" onchange="trignometry()" class="btn-trig form-select"
+        aria-label="Default select example">
+        <!-- Dropdown Menu Of Trignometry -->
+        <option value="trignometry" id="trig" selected disabled>
+          △ Trignometry
+          <i class="fa-solid fa-chevron-down"></i>
+        </option>
+        <option value="sin">sin(x)</option>
+        <option value="cos">cos(x)</option>
+        <option value="tan">tan(x)</option>
+      </select>
+      <!-- Dropdown Menu Of Functions -->
+      <select id="func" name="function" class="btn-func form-select" onchange="func()">
+        <option value="function" id="fun" selected disabled>ƒ Function <i class="fa-solid fa-chevron-down"></i>
+        </option>
+        <option value="abs">abs(x)</option>
+        <option value="floor">floor(x)</option>
+        <option value="ceil">ceil(x)</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <button type="button" class="btn btn-light  dialpad">2<sup>nd</sup></button>
+      <button type="button" class="btn btn-light  dialpad"> &pi;</button>
+      <button type="button" class="btn btn-light  dialpad">e</button>
+      <button type="button" class="btn btn-light  dialpad clear" value="ac"><i class="fa-solid fa-c"></i></button>
+      <button type="button" class="btn btn-light  dialpad clear" value="c"><i
+          class="fa-solid fa-delete-left"></i></button>
+    </div>
+
+    <div class="row">
+      <button type="button" class="btn btn-light dialpad" onclick="xpow()">x<sup>2</sup></button>
+      <button type="button" class="btn btn-light dialpad" onclick="oneByNum()">1/x</button>
+      <button type="button" class="btn btn-light dialpad" onclick="abslt()">| x |</button>
+      <button type="button" class="btn btn-light dialpad" onclick="expo()">exp</button>
+      <button type="button" class="btn btn-light dialpad operator" value="%">mod</button>
+    </div>
+
+    <div class="row">
+      <button type="button" class="btn btn-light dialpad" onclick="sqroot()">&radic;</button>
+      <button type="button" class="btn btn-light dialpad" value="(">(</button>
+      <button type="button" class="btn btn-light dialpad" value=")">)</button>
+      <button type="button" class="btn btn-light dialpad" onclick="fact()">n!</button>
+      <button type="button" class="btn btn-light dialpad btn-opr operator" value="/"><i
+          class="fa-solid fa-divide"></i></button>
+    </div>
+
+    <div class="row">
+      <button type="button" class="btn btn-light dialpad" value="**">x<sup>y</sup></button>
+      <button type="button" class="btn btn-primary btn-white operand" value="7">7</button>
+      <button type="button" class="btn btn-primary btn-white operand" value="8">8</button>
+      <button type="button" class="btn btn-primary btn-white operand" value="9">9</button>
+      <button type="button" class="btn btn-light dialpad btn-opr operator" value="*"><i
+          class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="row">
+      <button type="button" class="btn btn-light dialpad" onclick="powX()">10<sup>x</sup></button>
+      <button type="button" class="btn btn-primary btn-white operand" value="4">4</button>
+      <button type="button" class="btn btn-primary btn-white operand" value="5">5</button>
+      <button type="button" class="btn btn-primary btn-white operand" value="6">6</button>
+      <button type="button" class="btn btn-light dialpad btn-opr operator" value="-"><i
+          class="fa-solid fa-minus"></i></button>
+    </div>
+
+    <div class="row">
+      <button type="button" class="btn btn-light dialpad" onclick="log()">log</button>
+      <button type="button" class="btn btn-primary btn-white operand" value="1">1</button>
+      <button type="button" class="btn btn-primary btn-white operand" value="2">2</button>
+      <button type="button" class="btn btn-primary btn-white operand" value="3">3</button>
+      <button type="button" class="btn btn-light dialpad btn-opr operator" value="+"><i
+          class="fa-solid fa-plus"></i></button>
+    </div>
+
+    <div class="row">
+      <button type="button" class="btn btn-light dialpad" onclick="natLog()">In</button>
+      <button type="button" class="btn btn-primary btn-white dialpad" onclick="plusMinus()">+/-</button>
+      <button type="button" class="btn btn-primary btn-white operand" value="0">0</button>
+      <button type="button" class="btn btn-primary btn-white operand" value=".">.</button>
+      <button type="button" class="btn btn-primary btn-opr btn-equal" id="equalTo" onclick="calculate()"><i
+          class="fa-solid fa-equals"></i></button>
+    </div>
+
+  </div>
+
+  <script src="./app.js"></script>
 </body>
 
 </html>

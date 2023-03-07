@@ -1,69 +1,131 @@
 :root {
-    --background: #181c1f;
-    --secondary-background: #4b3f71;
-    --operator-background: #374957;
-    --text-input-background: #27343c;
-    --text-input-color: #e1e2e1;
-    --operand-background: #1d2528;
-    --equal-to-background: #014c6c;
-    --primary-color: #d5dfe8;
+    --primary-background: #f1f1f1;
+    --button-background: #f4f4f5;
+    --secondary-button-background: #91c1e7;
+    --white-background: #fff;
 }
+
 
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
+body {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-.main {
-    color: var(--primary-color);
-    background-color: var(--background);
-    height: auto;
-    width: 320px;
-    border-radius: 10px;
-    text-align: center;
-    margin: auto;
+.container {
+    width: 25rem;
+    margin-top: 12%;
+    background-color: var(--primary-background);
+}
+
+/* Design Of Display */
+input[type=text] {
+    width: 100%;
+    text-align: right;
+    font-size: 50px;
+    font-weight: 500;
+    color: black;
+    border: none;
+    padding-right: 5px;
+    background-color: var(--primary-background);
+}
+#output:focus {
+    outline: none;
+}
+
+/* Desining Of Buttons */
+
+button {
+    font-size: 15px;
 }
 
 .btn {
-    height: 65px;
-    width: 65px;
-    font-size: 28px;
+    width: 19%;
+    border: none;
 }
 
-.operator,
-.clear {
-    background-color: var(--operator-background);
+.btn,
+.btn-deg,
+.btn-fe {
+    border: none;
+    padding: 10px;
+    margin: 2px 2px;
+}
+
+.btn-deg,
+.btn-fe {
+    width: 19%;
+    font-weight: 900;
+    background-color: var(--primary-background);
+}
+
+.btn-m {
+    background-color: var(--primary-background);
+}
+.dialpad {
+    background-color: var(--button-background);
+}
+
+
+.btn-b {
+    font-weight: 900;
+}
+
+.btn-l {
+    color: #999595;
+    font-weight: 900;
+}
+
+
+.btn-opr {
+    font-size: medium;
+}
+
+.btn-white {
+    background-color: rgb(255, 255, 255);
+    color: #000;
+    font-weight: 900;
+}
+
+.btn-equal {
+    background-color: var(--secondary-button-background);
+}
+
+/* Dropdown Menus */
+#trigno,
+#func {
+    background: none;
+    border: none;
+    font-size: 15px;
+    width: 40%;
+    padding: 10px 0px;
+    text-align: center;
+    cursor: pointer;
     transition: 0.3s;
 }
 
-.equal-to {
-    background-color: var(--equal-to-background);
+select option {
+    background-color: white;
+    color: black;
 }
 
-#clearAll,
-#clear {
-    background-color: var(--secondary-background);
+/* Hover Effect Of Buttons */
+button:hover {
+    color: white;
 }
 
-#clearAll,
-#clear {
-    font-size: 28px;
+#trigno:hover,
+#func:hover {
+    background-color: #d3d4d5;
 }
 
-.operand {
-    background-color: var(--operand-background);
-    transition: 0.3s;
-}
-
-.operator:hover,
-.operand:hover,
-.clear:hover {
-    border-radius: 15px !important;
-}
-
-#output {
-    background-color: var(--text-input-background);
-    font-size: 40;
-    color: var(--text-input-color);
+.form-select:focus {
+    box-shadow: none;
 }
