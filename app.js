@@ -1,21 +1,65 @@
 let output = document.getElementById('output');
-output.focus();
+let memory = document.getElementById('memory')
+memory.innerText = output.focus();
+function Equation(operator) {
+    let value = parseFloat(output.value)
+    switch (operator) {
+        case "ln":
+            output.value = Evaluate(output.value + "l2");
+            break;
+        case "log":
+            output.value = Evaluate(output.value + "l10");
+            break;
+        case "pow10":
+            console.log("10^" + output.value);
+            output.value = Evaluate("10^" + output.value);
+            break;
+        case "square-root":
+            console.log(output.value + "^0.5");
+            output.value = Evaluate(output.value + "^0.5");
+            break;
+        case "square":
+            console.log(output.value + "^2");
+            output.value = Evaluate(output.value + "^2");
+            break;
+        case "oneByNum":
+            console.log("1/" + output.value);
+            output.value = Evaluate("1/" + output.value);
+            break;
+        case "fact":
+            let value = parseFloat(output.value)
+            var fact = 1;
 
+            for (let i = 1; i <= value; i++) {
+                fact *= i;
+            }
+            output.value = fact;
+            break;
+        case "plusMinus":
+            console.log(output.value);
+            output.value = Math.sign(parseFloat(output.value)) == 1 ? "-" + output.value : output.value.substring(1);
+            break;
+        case "exp":
+            // E = 2.79 , Math.exp()
+            console.log("2.7183^" + output.value);
+            output.value = Evaluate("2.7183^" + output.value);
+            break;
+        default:
+            break;
+    }
+}
 $(".operand").click(function () {
-    let value = $(this).val();
     output.value += $(this).val();
     // output.focus();
 })
 
 $(".operator").click(function () {
     let value = $(this).val();
-    if (value != '=' && value != '()') {
+    if (value != '=') {
         output.value += $(this).val();
     }
     // output.focus();
 })
-
-
 $(".clear").click(function () {
     let value = $(this).val();
     //Clear All Value
@@ -29,9 +73,47 @@ $(".clear").click(function () {
     // output.focus();
 })
 
+$(".abs").click(function () {
+    let value = parseFloat(output.value)
+    output.value = Math.abs(value);
+})
+
+
+
+$(".pi").click(function () {
+    output.value += Math.PI.toFixed(2);
+})
+$(".euler").click(function () {
+    output.value += Math.E.toFixed(2);
+})
+$(".mc").click(function () {
+    localStorage.removeItem("Memory")
+    memory.innerHTML = localStorage.getItem("Memory");
+
+})
+
+$(".mr").click(function () {
+    output.value = memory.innerText = localStorage.getItem("Memory");
+})
+$(".m-plus").click(function () {
+    localStorage.setItem("Memory", parseFloat(localStorage.getItem("Memory")) + parseFloat(output.value))
+    output.value = memory.innerText = localStorage.getItem("Memory");
+})
+$(".m-minus").click(function () {
+    localStorage.setItem("Memory", parseFloat(localStorage.getItem("Memory")) - parseFloat(output.value))
+    output.value = memory.innerText = localStorage.getItem("Memory");
+})
+
+$(".ms").click(function () {
+    localStorage.setItem("Memory", parseFloat(output.value))
+    memory.innerHTML = localStorage.getItem("Memory");
+})
+
+
+
+
 
 // Implementation of Stack for Evaluation
-
 var EX = {};
 EX.stackNode = function () {
     this.item = null;
@@ -110,18 +192,24 @@ EX.LinkedStack = function () {
 }
 
 // InFix to PostFix Convernsion
-EX.InfixToPostfixUpdate = function (exp) {
-    var infixStack = new EX.LinkedStack();
-    var pfixString = "";
+EX.InfixToPostfix = function (exp) {
+    console.log(exp);
     var pfixNumber = [];
+    var stk = [];
+    stk.push("#");
+
 
     var precedence = function (operator) {
         switch (operator) {
+            case "l":
+                return 4;
             case "^":
                 return 3;
             case "*":
                 return 2;
             case "/":
+                return 2;
+            case "%":
                 return 2;
             case "+":
                 return 1;
@@ -131,96 +219,77 @@ EX.InfixToPostfixUpdate = function (exp) {
                 return 0;
         }
     }
+
     for (var i = 0; i < exp.length; i++) {
         var c = exp.charAt(i);
-        if (!isNaN(parseInt(c))) {
-            var val = parseInt(c);
+        // Add to List if it is Number
+        // console.log("-----------------------------------");
+        // console.log("pfix", pfixNumber);
+        // console.log("stk", stk);
+        // console.log(c);
+
+        if (!isNaN(parseInt(c)) || c == ".") {
+            var val = c;
             for (var j = i + 1; j < exp.length; j++) {
-                if (!isNaN(exp.charAt(j))) {
-                    val = val * 10 + parseInt(exp.charAt(j));
+                if (!isNaN(exp.charAt(j)) || exp.charAt(j) == ".") {
+                    val += exp.charAt(j);
                     i++;
                 } else {
                     break;
                 }
             }
             pfixNumber.push(val);
-            pfixString += c;
-        } else if (c === '+' || c === '-' || c === '*' || c === '/' || c === '^') {
-            while (c != '^' && !infixStack.isStackEmpty() && (precedence(c) <= precedence(infixStack.stackTop()))) {
-                item = infixStack.popFromStack().item;
-                pfixString += item;
-                pfixNumber.push(item);
-
-            }
-            infixStack.pushToStack(c);
         }
+        else if (c == "(") {
+            stk.push("(");
+        }
+        else if (c == "^") {
+            stk.push('^');
+        }
+        else if (c == ")") {
+            while (stk[stk.length - 1] != "#" && stk[stk.length - 1] != '(') {
+                pfixNumber.push(stk.pop())
+            }
+            stk.pop();
+
+        } else {
+            if (precedence(c) > precedence(stk[stk.length - 1])) {
+                stk.push(c);
+            } else {
+                while (stk[stk.length - 1] != '#' && precedence(c) <= precedence(stk[stk.length - 1])) {
+                    pfixNumber.push(stk.pop());
+                }
+                stk.pop(c);
+            }
+        }
+
+        // console.log("pfix", pfixNumber);
+        // console.log("stk", stk);
+        // console.log("-----------------------------------");
+
     }
 
-    while (!infixStack.isStackEmpty()) {
-        item = infixStack.popFromStack().item;
-        pfixString += item;
-        pfixNumber.push(item);
+    while (stk[stk.length - 1] != '#') {
+        pfixNumber.push(stk.pop());
     }
-
 
     this.getPostfix = function () {
         return pfixNumber;
     }
-
-
-}
-EX.InfixToPostfix = function (exp) {
-
-    var infixStack = new EX.LinkedStack();
-    var pfixString = "";
-
-
-    var precedence = function (operator) {
-        switch (operator) {
-            case "^":
-                return 3;
-            case "*":
-                return 2;
-            case "/":
-                return 2;
-            case "+":
-                return 1;
-            case "-":
-                return 1;
-            default:
-                return 0;
-        }
-    }
-
-    for (var i = 0; i < exp.length; i++) {
-        var c = exp.charAt(i);
-        if (!isNaN(parseInt(c))) {
-            pfixString += c;
-        } else if (c === '+' || c === '-' || c === '*' || c === '/' || c === '^') {
-            while (c != '^' && !infixStack.isStackEmpty() && (precedence(c) <= precedence(infixStack.stackTop()))) {
-                pfixString += infixStack.popFromStack().item;
-            }
-            infixStack.pushToStack(c);
-        }
-    }
-    while (!infixStack.isStackEmpty()) {
-        pfixString += infixStack.popFromStack().item;
-    }
-
-    this.getPostfix = function () {
-        return pfixString;
-    }
 }
 
+
+// Evaluate PostFix
 EX.PostFix = function (exp) {
     this.exp = exp;
     var numStack = new EX.LinkedStack();
-
     var operate = function (obj, operator) {
         var operand2 = obj.popFromStack().item;
         var operand1 = obj.popFromStack().item;
+        console.log(operand2, operand1, operator);
         switch (operator) {
             case "+":
+                console.log(operand1 + operand2);
                 obj.pushToStack(operand1 + operand2);
                 break;
             case "-":
@@ -229,82 +298,48 @@ EX.PostFix = function (exp) {
             case "*":
                 obj.pushToStack(operand1 * operand2);
                 break;
+            case "%":
+                obj.pushToStack(operand1 % operand2);
+                break;
             case "/":
-                obj.pushToStack(parseInt(operand1 / operand2));
+                obj.pushToStack(parseFloat(operand1 / operand2));
                 break;
             case "^":
+                console.log(operand1, operand2);
                 obj.pushToStack(Math.pow(operand1, operand2));
+                break;
+            case "l":
+                console.log("Come to log");
+                obj.pushToStack(Math.log(operand1) / Math.log(operand2));
                 break;
         }
 
     };
-
-
     for (var i = 0; i < exp.length; i++) {
-        c = exp.charAt(i);
+        c = exp[i];
         if (!isNaN(parseInt(c))) {
-            numStack.pushToStack(parseInt(c));
-        } else if (c === '+' || c === '-' || c === '*' || c === '/' || c === '^') {
+            numStack.pushToStack(parseFloat(c));
+        } else if (c === '+' || c === '-' || c === '*' || c === '/' || c === '^' || c === '%' || c === 'l') {
             operate(numStack, c)
         }
     }
-
     this.getResult = function () {
         return numStack.stackTop();
     }
 
 }
 
-EX.PostFixEvaluate = function (operand1, operand2, operator) {
-    let priFixVal = 0;
-    console.log(operator);
-    switch (operator) {
-        case "+":
+function Evaluate(equ) {
+    var pfix = new EX.InfixToPostfix(equ);
+    let postfixEqu = pfix.getPostfix();
+    console.log(postfixEqu);
 
-            priFixVal = operand1 + operand2;
-            break;
-        case "-":
-            priFixVal = operand1 - operand2;
-            break;
-        case "*":
-            priFixVal = operand1 * operand2;
-            break;
-        case "/":
-            priFixVal = parseInt(operand1 / operand2);
-            break;
-        case "^":
-            priFixVal = Math.pow(operand1, operand2);
-            break;
-    }
-
-    this.getResult = function () {
-        return priFixVal;
-    }
+    // Evaluate Equation
+    var EquEval = new EX.PostFix(postfixEqu);
+    EquEval = EquEval.getResult();
+    return EquEval.toFixed(2);
 }
 $("#equalTo").click(function () {
-    // console.log(output.value);
-    // var postFixEqu = new EX.InfixToPostfixUpdate(output.value);
-    // postFixEqu = postFixEqu.getPostfix();
-    // console.log(postFixEqu);
-    // var Evaluation = new EX.PostFix(postFixEqu);
-    // console.log("Result for Expression:" + Evaluation.getResult());
-
-    // Chacking
-    var pfix = new EX.InfixToPostfixUpdate("55+10-68");
-    let pfixEquation = pfix.getPostfix();
-    while (pfixEquation.length >= 3) {
-        console.log(pfixEquation);
-        operand1 = Number(pfixEquation.splice(0, 1));
-        operand2 = Number(pfixEquation.splice(0, 1));
-        operator = pfixEquation[0];
-
-        console.log(operand1, operator, operand2);
-        evaluateValue = new EX.PostFixEvaluate(operand1, operand2, operator);
-        evaluateValue = evaluateValue.getResult();
-        pfixEquation[0] = evaluateValue;
-        console.log(pfixEquation);
-        console.log(evaluateValue);
-    }
-    console.log("Result for Expression: " + pfix.getPostfix());
-
+    // Infix To PostFix 
+    output.value = Evaluate(output.value);
 })

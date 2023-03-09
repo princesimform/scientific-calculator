@@ -23,6 +23,9 @@
     <div class="display">
       <input type="text" id="output" placeholder="0">
     </div>
+    <div class="text-muted">
+      Memory : <span class="memory-view" id="memory"></span>
+    </div>
     <!-- Buttons Of Calculator -->
     <div class="row">
       <button type="button" class="btn btn-light btn-deg" onclick="deg()">DEG</button>
@@ -30,11 +33,11 @@
     </div>
 
     <div class="row">
-      <button type="button" class="btn btn-light btn-m btn-l" onclick="mcFunc()">MC</button>
-      <button type="button" class="btn btn-light btn-m btn-l" onclick="mrFunc()">MR</button>
-      <button type="button" class="btn btn-light btn-m btn-b" onclick="mpFunc()">M+</button>
-      <button type="button" class="btn btn-light btn-m btn-b" onclick="mmFunc()">M-</button>
-      <button type="button" class="btn btn-light btn-m btn-b" onclick="msFunc()">MS</button>
+      <button type="button" class="btn btn-light btn-m btn-l mc">MC</button>
+      <button type="button" class="btn btn-light btn-m btn-l mr">MR</button>
+      <button type="button" class="btn btn-light btn-m btn-b m-plus">M+</button>
+      <button type="button" class="btn btn-light btn-m btn-b m-minus">M-</button>
+      <button type="button" class="btn btn-light btn-m btn-b ms">MS</button>
     </div>
 
     <div class="row">
@@ -62,32 +65,32 @@
 
     <div class="row">
       <button type="button" class="btn btn-light  dialpad">2<sup>nd</sup></button>
-      <button type="button" class="btn btn-light  dialpad"> &pi;</button>
-      <button type="button" class="btn btn-light  dialpad">e</button>
+      <button type="button" class="btn btn-light  dialpad pi"> &pi;</button>
+      <button type="button" class="btn btn-light  dialpad euler">e</button>
       <button type="button" class="btn btn-light  dialpad clear" value="ac"><i class="fa-solid fa-c"></i></button>
       <button type="button" class="btn btn-light  dialpad clear" value="c"><i
           class="fa-solid fa-delete-left"></i></button>
     </div>
 
     <div class="row">
-      <button type="button" class="btn btn-light dialpad" onclick="xpow()">x<sup>2</sup></button>
-      <button type="button" class="btn btn-light dialpad" onclick="oneByNum()">1/x</button>
-      <button type="button" class="btn btn-light dialpad" onclick="abslt()">| x |</button>
-      <button type="button" class="btn btn-light dialpad" onclick="expo()">exp</button>
+      <button type="button" class="btn btn-light dialpad square" onclick="Equation('square')" >x<sup>2</sup></button>
+      <button type="button" class="btn btn-light dialpad oneByNum" onclick="Equation('oneByNum')">1/x</button>
+      <button type="button" class="btn btn-light dialpad abs">| x |</button>
+      <button type="button" class="btn btn-light dialpad " onclick="Equation('exp')">exp</button>
       <button type="button" class="btn btn-light dialpad operator" value="%">mod</button>
     </div>
 
     <div class="row">
-      <button type="button" class="btn btn-light dialpad" onclick="sqroot()">&radic;</button>
-      <button type="button" class="btn btn-light dialpad" value="(">(</button>
-      <button type="button" class="btn btn-light dialpad" value=")">)</button>
-      <button type="button" class="btn btn-light dialpad" onclick="fact()">n!</button>
+      <button type="button" class="btn btn-light dialpad square-root" onclick="Equation('square-root')">&radic;</button>
+      <button type="button" class="btn btn-light dialpad operator" value="(">(</button>
+      <button type="button" class="btn btn-light dialpad operator" value=")">)</button>
+      <button type="button" class="btn btn-light dialpad fact" onclick="Equation('fact')">n!</button>
       <button type="button" class="btn btn-light dialpad btn-opr operator" value="/"><i
           class="fa-solid fa-divide"></i></button>
     </div>
 
     <div class="row">
-      <button type="button" class="btn btn-light dialpad" value="**">x<sup>y</sup></button>
+      <button type="button" class="btn btn-light dialpad operator" value="^">x<sup>y</sup></button>
       <button type="button" class="btn btn-primary btn-white operand" value="7">7</button>
       <button type="button" class="btn btn-primary btn-white operand" value="8">8</button>
       <button type="button" class="btn btn-primary btn-white operand" value="9">9</button>
@@ -96,7 +99,7 @@
     </div>
 
     <div class="row">
-      <button type="button" class="btn btn-light dialpad" onclick="powX()">10<sup>x</sup></button>
+      <button type="button" class="btn btn-light dialpad " onclick="Equation('pow10')">10<sup>x</sup></button>
       <button type="button" class="btn btn-primary btn-white operand" value="4">4</button>
       <button type="button" class="btn btn-primary btn-white operand" value="5">5</button>
       <button type="button" class="btn btn-primary btn-white operand" value="6">6</button>
@@ -105,7 +108,7 @@
     </div>
 
     <div class="row">
-      <button type="button" class="btn btn-light dialpad" onclick="log()">log</button>
+      <button type="button" class="btn btn-light dialpad log" onclick="Equation('log')">log</button>
       <button type="button" class="btn btn-primary btn-white operand" value="1">1</button>
       <button type="button" class="btn btn-primary btn-white operand" value="2">2</button>
       <button type="button" class="btn btn-primary btn-white operand" value="3">3</button>
@@ -114,8 +117,8 @@
     </div>
 
     <div class="row">
-      <button type="button" class="btn btn-light dialpad" onclick="natLog()">In</button>
-      <button type="button" class="btn btn-primary btn-white dialpad" onclick="plusMinus()">+/-</button>
+      <button type="button" class="btn btn-light dialpad" onclick="Equation('ln')">In</button>
+      <button type="button" class="btn btn-primary btn-white dialpad" onclick="Equation('plusMinus')">+/-</button>
       <button type="button" class="btn btn-primary btn-white operand" value="0">0</button>
       <button type="button" class="btn btn-primary btn-white operand" value=".">.</button>
       <button type="button" class="btn btn-primary btn-opr btn-equal" id="equalTo" onclick="calculate()"><i
