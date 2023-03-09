@@ -136,8 +136,9 @@ EX.InfixToPostfixUpdate = function (exp) {
         if (!isNaN(parseInt(c))) {
             var val = parseInt(c);
             for (var j = i + 1; j < exp.length; j++) {
-                if (!isNaN(parseInt(j))) {
+                if (!isNaN(exp.charAt(j))) {
                     val = val * 10 + parseInt(exp.charAt(j));
+                    i++;
                 } else {
                     break;
                 }
@@ -146,18 +147,24 @@ EX.InfixToPostfixUpdate = function (exp) {
             pfixString += c;
         } else if (c === '+' || c === '-' || c === '*' || c === '/' || c === '^') {
             while (c != '^' && !infixStack.isStackEmpty() && (precedence(c) <= precedence(infixStack.stackTop()))) {
-                pfixString += infixStack.popFromStack().item;
+                item = infixStack.popFromStack().item;
+                pfixString += item;
+                pfixNumber.push(item);
+
             }
             infixStack.pushToStack(c);
         }
     }
 
     while (!infixStack.isStackEmpty()) {
-        pfixString += infixStack.popFromStack().item;
+        item = infixStack.popFromStack().item;
+        pfixString += item;
+        pfixNumber.push(item);
     }
 
+
     this.getPostfix = function () {
-        return pfixString;
+        return pfixNumber;
     }
 
 
@@ -248,15 +255,56 @@ EX.PostFix = function (exp) {
 
 }
 
-console.log(" POSTFIX 42+351-");
-var pfix = new EX.PostFix("55+10-68+");
-console.log("Result for Expression: " + pfix.getResult())
+EX.PostFixEvaluate = function (operand1, operand2, operator) {
+    let priFixVal = 0;
+    console.log(operator);
+    switch (operator) {
+        case "+":
 
+            priFixVal = operand1 + operand2;
+            break;
+        case "-":
+            priFixVal = operand1 - operand2;
+            break;
+        case "*":
+            priFixVal = operand1 * operand2;
+            break;
+        case "/":
+            priFixVal = parseInt(operand1 / operand2);
+            break;
+        case "^":
+            priFixVal = Math.pow(operand1, operand2);
+            break;
+    }
+
+    this.getResult = function () {
+        return priFixVal;
+    }
+}
 $("#equalTo").click(function () {
-    console.log(output.value);
-    var postFixEqu = new EX.InfixToPostfix(output.value);
-    postFixEqu = postFixEqu.getPostfix();
-    console.log(postFixEqu);
-    var Evaluation = new EX.PostFix(postFixEqu);
-    console.log("Result for Expression:" + Evaluation.getResult());
+    // console.log(output.value);
+    // var postFixEqu = new EX.InfixToPostfixUpdate(output.value);
+    // postFixEqu = postFixEqu.getPostfix();
+    // console.log(postFixEqu);
+    // var Evaluation = new EX.PostFix(postFixEqu);
+    // console.log("Result for Expression:" + Evaluation.getResult());
+
+    // Chacking
+    var pfix = new EX.InfixToPostfixUpdate("55+10-68");
+    let pfixEquation = pfix.getPostfix();
+    while (pfixEquation.length >= 3) {
+        console.log(pfixEquation);
+        operand1 = Number(pfixEquation.splice(0, 1));
+        operand2 = Number(pfixEquation.splice(0, 1));
+        operator = pfixEquation[0];
+
+        console.log(operand1, operator, operand2);
+        evaluateValue = new EX.PostFixEvaluate(operand1, operand2, operator);
+        evaluateValue = evaluateValue.getResult();
+        pfixEquation[0] = evaluateValue;
+        console.log(pfixEquation);
+        console.log(evaluateValue);
+    }
+    console.log("Result for Expression: " + pfix.getPostfix());
+
 })
