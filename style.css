@@ -36,6 +36,7 @@ input[type=text] {
     padding-right: 5px;
     background-color: var(--primary-background);
 }
+
 #output:focus {
     outline: none;
 }
@@ -69,6 +70,7 @@ button {
 .btn-m {
     background-color: var(--primary-background);
 }
+
 .dialpad {
     background-color: var(--button-background);
 }
@@ -99,12 +101,11 @@ button {
 }
 
 /* Dropdown Menus */
-#trigno,
+#trigo,
 #func {
     background: none;
     border: none;
     font-size: 15px;
-    width: 40%;
     padding: 10px 0px;
     text-align: center;
     cursor: pointer;
@@ -117,15 +118,67 @@ select option {
 }
 
 /* Hover Effect Of Buttons */
-button:hover {
+.btn:hover {
     color: white;
 }
 
-#trigno:hover,
+#trigo:hover,
 #func:hover {
     background-color: #d3d4d5;
 }
 
 .form-select:focus {
     box-shadow: none;
+}
+
+.active {
+    background-color: var(--secondary-button-background) !important;
+    font-weight: 900;
+}
+
+.btn-hide {
+    display: none !important;
+}
+
+.btn-show {
+    display: block;
+}
+
+
+
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 40%;
+}
+
+.func-list,
+.trigo-list {
+    display: none;
+    position: absolute;
+    /* background-color: var(--secondary-button-background); */
+    min-width: 140px;
+    z-index: 1;
+
+}
+
+.trigo-list button,
+.func-list button {
+    color: white;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    background-color: var(--secondary-button-background);
+
+}
+
+.dropdown button:hover {
+    background-color: var(--secondary-button-background);
+    color: black;
+}
+
+.show {
+    display: block;
 }
