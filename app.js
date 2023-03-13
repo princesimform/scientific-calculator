@@ -427,6 +427,7 @@ EX.InfixToPostfix = function (exp) {
 // Evaluate PostFix and Get Answer
 EX.PostFix = function (exp) {
     this.exp = exp;
+    console.log(exp);
     var numStack = new EX.LinkedStack();
     // Use The Operator and oprand and return evaluated value
     var operate = function (obj, operator) {
