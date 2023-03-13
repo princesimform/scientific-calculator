@@ -1,6 +1,13 @@
 let output = document.getElementById('output');
 let memory = document.getElementById('memory');
-let redToDegree = "degree"
+let redToDegree = "degree";
+const errorMsg = () => {
+    document.getElementById('error').innerText = "Malformed expression";
+    output.value = '';
+    setTimeout(() => {
+        document.getElementById('error').innerText = '';
+    }, 3000);
+}
 if (localStorage.getItem("Memory")) {
     memory.innerText = localStorage.getItem("Memory")
 }
@@ -29,10 +36,12 @@ second.addEventListener('click',
         }
     })
 function Equation(operator) {
+    let isError = false;
     try {
         var EvaluateVal = Evaluate(output.value)
     } catch (error) {
-        document.getElementById("error").innerText = "Malformed expression";
+        isError = true;
+        errorMsg();
     }
     switch (operator) {
         case "ln":
@@ -68,7 +77,6 @@ function Equation(operator) {
         case "fact":
             let value = parseFloat(output.value)
             var fact = 1;
-
             for (let i = 1; i <= value; i++) {
                 fact *= i;
             }
@@ -177,10 +185,7 @@ $(".clear").click(function () {
     // output.focus();
 })
 
-$(".abs").click(function () {
-    let value = parseFloat(output.value)
-    output.value = Math.abs(value);
-})
+
 
 $(".mc").click(function () {
     localStorage.removeItem("Memory")
@@ -273,8 +278,6 @@ EX.LinkedStack = function () {
             return current.item;
         } else {
             console.log("There is No item in Stack");
-            output.value = '';
-            document.getElementById('error').innerText = "Invalid";
             return null;
         }
     }
@@ -342,8 +345,6 @@ EX.InfixToPostfix = function (exp) {
                     break;
                 }
             }
-
-
             pfixNumber.push(val);
         }
         else if (log == "log") {
@@ -379,7 +380,6 @@ EX.InfixToPostfix = function (exp) {
         console.log("pfix", pfixNumber);
         console.log("stk", stk);
         console.log("-----------------------------------");
-
     }
 
     while (stk[stk.length - 1] != '#') {
@@ -461,7 +461,7 @@ $("#equalTo").click(function () {
     try {
         output.value = Evaluate(output.value);
     } catch (error) {
-        document.getElementById("error").innerText = "Malformed expression";
+        errorMsg();
     }
 })
 
