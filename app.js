@@ -1,6 +1,9 @@
+// Global variables  
 let output = document.getElementById('output');
 let memory = document.getElementById('memory');
 let redToDegree = "degree";
+
+//Error Message If the User Enter Malformed expression
 const errorMsg = () => {
     document.getElementById('error').innerText = "Malformed expression";
     output.value = '';
@@ -8,9 +11,28 @@ const errorMsg = () => {
         document.getElementById('error').innerText = '';
     }, 3000);
 }
+
+// Generate the operand (1,2,3,..) from the Equation
+$(".operand").click(function () {
+    output.value += $(this).val();
+    // output.focus();
+})
+
+// Generate the operator (+,-,*,..) from the Equation
+$(".operator").click(function () {
+    let value = $(this).val();
+    if (value != '=') {
+        output.value += $(this).val();
+    }
+    // output.focus();
+})
+
+// Gte the Memory from Storage
 if (localStorage.getItem("Memory")) {
     memory.innerText = localStorage.getItem("Memory")
 }
+
+// Changing the First Column Equations
 let second = document.getElementById("second");
 second.addEventListener('click',
     function () {
@@ -23,7 +45,6 @@ second.addEventListener('click',
 
         let btnChange = document.getElementsByClassName('btn-change');
 
-        console.log(btnChange);
         for (let i = 0; i < btnChange.length; i++) {
             const element = btnChange[i];
             if (element.classList.contains('btn-hide')) {
@@ -35,8 +56,9 @@ second.addEventListener('click',
             }
         }
     })
+
+//Woking for Equations Which are Define in the calculator
 function Equation(operator) {
-    let isError = false;
     try {
         var EvaluateVal = Evaluate(output.value)
     } catch (error) {
@@ -45,51 +67,43 @@ function Equation(operator) {
     }
     switch (operator) {
         case "ln":
-            output.value = Evaluate(output.value + "log2");
+            output.value = Evaluate(EvaluateVal + "log2");
             break;
         case "log":
-            output.value = Evaluate(output.value + "log10");
+            output.value = Evaluate(EvaluateVal + "log10");
             break;
         case "pow10":
-            console.log("10^" + output.value);
-            output.value = Evaluate("10^" + output.value);
+            output.value = Evaluate("10^" + EvaluateVal);
             break;
         case "pow2":
-            console.log("2^" + output.value);
-            output.value = Evaluate("2^" + output.value);
+            output.value = Evaluate("2^" + EvaluateVal);
             break;
         case "square-root":
-            console.log(output.value + "^0.5");
-            output.value = Evaluate(`2√${output.value}`);
+            output.value = Evaluate(`2√${EvaluateVal}`);
             break;
         case "cube-root":
-            output.value = Evaluate(`3√${output.value}`);
+            output.value = Evaluate(`3√${EvaluateVal}`);
             break;
         case "square":
-            output.value = Evaluate(output.value + "^2");
+            output.value = Evaluate(EvaluateVal + "^2");
             break;
         case "cube":
-            output.value = Evaluate(`${output.value}^3`);
+            output.value = Evaluate(`${EvaluateVal}^3`);
             break;
         case "oneByNum":
-            output.value = Evaluate("1/" + output.value);
+            output.value = Evaluate("1/" + EvaluateVal);
             break;
         case "fact":
-            let value = parseFloat(output.value)
+            let value = parseFloat(EvaluateVal)
             var fact = 1;
             for (let i = 1; i <= value; i++) {
                 fact *= i;
             }
             output.value = fact;
             break;
-        case "plusMinus":
-            console.log(output.value);
-            output.value = Math.sign(parseFloat(output.value)) == 1 ? "-" + output.value : output.value.substring(1);
-            break;
         case "exp":
             // E = 2.79 , Math.exp()
-            console.log("2.7183^" + output.value);
-            output.value = Evaluate("2.7183^" + output.value);
+            output.value = Evaluate("2.7183^" + EvaluateVal);
             break;
         case "pi":
             if (output.value) {
@@ -145,7 +159,7 @@ function Equation(operator) {
             break;
     }
 }
-
+// Convert Degree To Redians
 function Deg() {
     let EvaluateVal = Evaluate(output.value)
     if (redToDegree == "degree") {
@@ -156,22 +170,16 @@ function Deg() {
         redToDegree = "degree";
     }
 }
+// Changing the Equation Sign
+function plusMinus() {
+    output.value = Math.sign(parseFloat(output.value)) == -1 ? output.value.substring(1) : "-" + output.value;
+}
+// Work when user Click on F-E
 function fixedExpo() {
     let EvaluateVal = parseFloat(Evaluate(output.value))
     output.value = EvaluateVal.toExponential(10);
 }
-$(".operand").click(function () {
-    output.value += $(this).val();
-    // output.focus();
-})
-
-$(".operator").click(function () {
-    let value = $(this).val();
-    if (value != '=') {
-        output.value += $(this).val();
-    }
-    // output.focus();
-})
+//Clearing the Input
 $(".clear").click(function () {
     let value = $(this).val();
     //Clear All Value
@@ -186,33 +194,74 @@ $(".clear").click(function () {
 })
 
 
+// Memory Storage Functions
 
+// Clear the Memory
 $(".mc").click(function () {
     localStorage.removeItem("Memory")
     memory.innerHTML = localStorage.getItem("Memory");
-
 })
-
+// Recall the Memory
 $(".mr").click(function () {
     output.value = memory.innerText = localStorage.getItem("Memory");
 })
+
+
+// Addtion to Memory
 $(".m-plus").click(function () {
     localStorage.setItem("Memory", parseFloat(localStorage.getItem("Memory")) + parseFloat(output.value))
     output.value = memory.innerText = localStorage.getItem("Memory");
 })
+
+// Subtraction to Memory
 $(".m-minus").click(function () {
     localStorage.setItem("Memory", parseFloat(localStorage.getItem("Memory")) - parseFloat(output.value))
     output.value = memory.innerText = localStorage.getItem("Memory");
 })
 
+// Store value to Memory
 $(".ms").click(function () {
-    localStorage.setItem("Memory", parseFloat(output.value))
-    memory.innerHTML = localStorage.getItem("Memory");
+    localStorage.setItem("Memory", parseFloat(Evaluate(output.value)))
+    output.value = memory.innerHTML = localStorage.getItem("Memory");
 })
 
+// Hide and Show Trigo and Functions
+function myFunction() {
+    document.getElementById("funcList").classList.toggle("show");
+}
+function myTrigo() {
+    document.getElementById("trigoList").classList.toggle("show");
+}
+// Close the dropdown if the user clicks outside of it
+window.onclick = function (event) {
+    if (!event.target.matches('.btn-func')) {
+        var dropdowns = document.getElementsByClassName("func-list");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+
+    if (!event.target.matches('.btn-trigo')) {
+        var dropdowns = document.getElementsByClassName("trigo-list");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}
 
 
 
+// Start the Equation Evaluation using prefix -> postfix
+// First Equation will convert into postfix after that
+// Postfix will Evaluated uisng precedance order so that we can get Equarate answer
 
 // Implementation of Stack for Evaluation
 var EX = {};
@@ -221,10 +270,13 @@ EX.stackNode = function () {
     this.next = null;
 }
 
+
+// Define Stack Opration
 EX.LinkedStack = function () {
     var head = null;
     var size = null;
 
+    // Push the Item to Stack
     this.pushToStack = function (item) {
         var node = new EX.stackNode();
         node.item = item;
@@ -244,6 +296,7 @@ EX.LinkedStack = function () {
         }
     }
 
+    // Pop the Item to Stack
     this.popFromStack = function () {
         var current = head;
         if (size === 0) {
@@ -265,10 +318,12 @@ EX.LinkedStack = function () {
         return current;
     }
 
+    // Check the Stack in Empty or not
     this.isStackEmpty = function () {
         return (size < 1) ? true : false;
     }
 
+    // Return the which is the stack top
     this.stackTop = function () {
         var current = head;
         if (size > 0 && head != null) {
@@ -277,29 +332,25 @@ EX.LinkedStack = function () {
             }
             return current.item;
         } else {
-            console.log("There is No item in Stack");
             return null;
         }
     }
 
+    // Return Complete Stack
     this.printStack = function () {
         var current = head;
         while (current.next !== null) {
-            console.log("Item " + current.item + " is on the stack.");
             current = current.next;
         }
-        console.log("Item " + current.item + " is on the stack.");
     }
 }
 
 // InFix to PostFix Convernsion
 EX.InfixToPostfix = function (exp) {
-    console.log(exp);
     var pfixNumber = [];
     var stk = [];
     stk.push("#");
-
-
+    // Define the precedence of the Opetator
     var precedence = function (operator) {
         switch (operator) {
             case "log":
@@ -322,20 +373,12 @@ EX.InfixToPostfix = function (exp) {
                 return 0;
         }
     }
-
+    // Get the Equation and Convert into  PostFix 
     for (var i = 0; i < exp.length; i++) {
         var c = exp.charAt(i);
         // Add to List if it is Number
-        console.log("-----------------------------------");
-        console.log("pfix", pfixNumber);
-        console.log("stk", stk);
-        console.log(c);
         let log = exp.substring(i, i + 3);
-        console.log(exp);
-        console.log("My log is " + log);
         if (!isNaN(parseInt(c)) || c == ".") {
-            console.log(c + "It is number");
-
             var val = c;
             for (var j = i + 1; j < exp.length; j++) {
                 if (!isNaN(exp.charAt(j)) || exp.charAt(j) == ".") {
@@ -354,32 +397,21 @@ EX.InfixToPostfix = function (exp) {
         else if (c == "(") {
             stk.push("(");
         }
-
         else if (c == ")") {
             while (stk[stk.length - 1] != "#" && stk[stk.length - 1] != '(') {
                 pfixNumber.push(stk.pop())
             }
             stk.pop();
-
         } else {
-            console.log(precedence(c));
-            console.log(precedence(c) + ">" + precedence(stk[stk.length - 1]));
             if (precedence(c) > precedence(stk[stk.length - 1])) {
                 stk.push(c);
             } else {
-                console.log(stk[stk.length - 1] + "!=" + '#' + "&&" + precedence(c) + "<=" + precedence(stk[stk.length - 1]));
                 while (stk[stk.length - 1] != '#' && precedence(c) <= precedence(stk[stk.length - 1])) {
-                    console.log("Come to while");
-
                     pfixNumber.push(stk.pop());
                 }
                 stk.push(c)
             }
         }
-
-        console.log("pfix", pfixNumber);
-        console.log("stk", stk);
-        console.log("-----------------------------------");
     }
 
     while (stk[stk.length - 1] != '#') {
@@ -392,17 +424,16 @@ EX.InfixToPostfix = function (exp) {
 }
 
 
-// Evaluate PostFix
+// Evaluate PostFix and Get Answer
 EX.PostFix = function (exp) {
     this.exp = exp;
     var numStack = new EX.LinkedStack();
+    // Use The Operator and oprand and return evaluated value
     var operate = function (obj, operator) {
         var operand2 = obj.popFromStack().item;
         var operand1 = obj.popFromStack().item;
-        console.log(operand2, operand1, operator);
         switch (operator) {
             case "+":
-                console.log(operand1 + operand2);
                 obj.pushToStack(operand1 + operand2);
                 break;
             case "-":
@@ -418,7 +449,6 @@ EX.PostFix = function (exp) {
                 obj.pushToStack(parseFloat(operand1 / operand2));
                 break;
             case "^":
-                console.log(operand1, operand2);
                 obj.pushToStack(Math.pow(operand1, operand2));
                 break;
             case "√":
@@ -426,12 +456,11 @@ EX.PostFix = function (exp) {
                 obj.pushToStack(Math.pow(operand2, operand3));
                 break;
             case "log":
-                console.log("Come to log");
                 obj.pushToStack(Math.log(operand1) / Math.log(operand2));
                 break;
         }
-
     };
+    // Use The Operator and oprand from stack 
     for (var i = 0; i < exp.length; i++) {
         c = exp[i];
         if (!isNaN(parseInt(c))) {
@@ -440,22 +469,26 @@ EX.PostFix = function (exp) {
             operate(numStack, c)
         }
     }
+    //Return The Result Of the Equation  
     this.getResult = function () {
         return numStack.stackTop();
     }
 
 }
 
+
+// Evaluate the Postfix Equation
 function Evaluate(equ) {
     var pfix = new EX.InfixToPostfix(equ);
     let postfixEqu = pfix.getPostfix();
-    console.log(postfixEqu);
-
     // Evaluate Equation
     var EquEval = new EX.PostFix(postfixEqu);
     EquEval = EquEval.getResult();
     return EquEval.toFixed(2);
 }
+
+
+// Run When  user Click on Equal To Sign
 $("#equalTo").click(function () {
     // Infix To PostFix 
     try {
@@ -464,37 +497,3 @@ $("#equalTo").click(function () {
         errorMsg();
     }
 })
-
-
-function myFunction() {
-    document.getElementById("funcList").classList.toggle("show");
-}
-function myTrigo() {
-    document.getElementById("trigoList").classList.toggle("show");
-}
-// Close the dropdown if the user clicks outside of it
-window.onclick = function (event) {
-    if (!event.target.matches('.btn-func')) {
-        var dropdowns = document.getElementsByClassName("func-list");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-}
-
-window.onclick = function (event) {
-    if (!event.target.matches('.btn-trigo')) {
-        var dropdowns = document.getElementsByClassName("trigo-list");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-}
