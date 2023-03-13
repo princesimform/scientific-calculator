@@ -2,7 +2,7 @@
 
 <br />
 
-[Scientific Calculator Working Demo](https://princesimform.github.io/calculator-practical)
+[Scientific Calculator Working Demo](https://princesimform.github.io/scientific-calculator)
 ---
 
 
