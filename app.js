@@ -500,7 +500,7 @@ $("#equalTo").click(function () {
 
 // Evaluate on Press Enter
 window.addEventListener("keydown", function (e) {
-    if (e.code === "Enter") {
+    if (e.code === "Enter" || e.code === "NumpadEnter") {
         try {
             output.value = Evaluate(output.value);
         } catch (error) {
