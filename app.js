@@ -2,6 +2,7 @@
 let output = document.getElementById('output');
 let memory = document.getElementById('memory');
 let redToDegree = "degree";
+let validDecimal = false;
 
 //Error Message If the User Enter Malformed expression
 const errorMsg = () => {
@@ -18,12 +19,21 @@ $(".operand").click(function () {
     // output.focus();
 })
 
+$("#point").click(function () {
+    if (!validDecimal) {
+        document.getElementById("point").disabled = true;
+    }
+    validDecimal = true;
+})
 // Generate the operator (+,-,*,..) from the Equation
 $(".operator").click(function () {
     let value = $(this).val();
     if (value != '=') {
         output.value += $(this).val();
     }
+    validDecimal = false;
+    document.getElementById("point").disabled = false;
+
     // output.focus();
 })
 
@@ -185,10 +195,20 @@ $(".clear").click(function () {
     //Clear All Value
     if (value == 'ac') {
         output.value = '';
+        validDecimal = false;
+        document.getElementById('point').disabled = false;
     }
     if (value == 'c') {
         //Clear single Char 
         output.value = output.value.slice(0, -1)
+        console.log(output.value[output.value.length - 1], output.value.length);
+        if (isNaN(output.value[output.value.length - 1]) && output.value[output.value.length - 1] != undefined) {
+            document.getElementById('point').disabled = true;
+        } else if (output.value[output.value.length] == ".") {
+            document.getElementById('point').disabled = false;
+        } else {
+            document.getElementById('point').disabled = false;
+        }
     }
     // output.focus();
 })
@@ -378,7 +398,7 @@ EX.InfixToPostfix = function (exp) {
         var c = exp.charAt(i);
         // Add to List if it is Number
         let log = exp.substring(i, i + 3);
-        if (!isNaN(parseInt(c)) || c == ".") {
+        if (!isNaN(parseInt(c)) || c == "." || i == 0) {
             var val = c;
             for (var j = i + 1; j < exp.length; j++) {
                 if (!isNaN(exp.charAt(j)) || exp.charAt(j) == ".") {
@@ -427,6 +447,7 @@ EX.InfixToPostfix = function (exp) {
 // Evaluate PostFix and Get Answer
 EX.PostFix = function (exp) {
     this.exp = exp;
+    console.log(exp);
     var numStack = new EX.LinkedStack();
     // Use The Operator and oprand and return evaluated value
     var operate = function (obj, operator) {
@@ -496,10 +517,12 @@ $("#equalTo").click(function () {
     } catch (error) {
         errorMsg();
     }
+    
 })
 
 // Evaluate on Press Enter
 window.addEventListener("keydown", function (e) {
+    console.log(e.code,);
     if (e.code === "Enter" || e.code === "NumpadEnter") {
         try {
             output.value = Evaluate(output.value);
@@ -507,4 +530,18 @@ window.addEventListener("keydown", function (e) {
             errorMsg();
         }
     }
+    if (e.code === "NumpadDecimal" || e.code === "Period") {
+        if (validDecimal) {
+            e.preventDefault();
+        }
+        validDecimal = true;
+    }
+
+    if (e.code === "NumpadAdd" || e.code === "NumpadSubtract" || e.code === "NumpadMultiply" || e.code === "NumpadDivide" || e.code === "Minus") {
+        console.log("disable");
+        validDecimal = false;
+    }
 })
+
+output.focus();
+
