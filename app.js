@@ -14,29 +14,26 @@ const errorMsg = () => {
 }
 
 // Generate the operand (1,2,3,..) from the Equation
-$(".operand").click(function () {
-    output.value += $(this).val();
-    // output.focus();
-})
+function operand(val) {
+    output.value += val;
+}
 
-$("#point").click(function () {
+document.getElementById('point').addEventListener('click', function () {
     if (!validDecimal) {
         document.getElementById("point").disabled = true;
     }
     validDecimal = true;
 })
+
 // Generate the operator (+,-,*,..) from the Equation
-$(".operator").click(function () {
-    let value = $(this).val();
+function operator(val) {
+    let value = val;
     if (value != '=') {
-        output.value += $(this).val();
+        output.value += val;
     }
     validDecimal = false;
     document.getElementById("point").disabled = false;
-
-    // output.focus();
-})
-
+}
 // Gte the Memory from Storage
 if (localStorage.getItem("Memory")) {
     memory.innerText = localStorage.getItem("Memory")
@@ -72,7 +69,6 @@ function Equation(operator) {
     try {
         var EvaluateVal = Evaluate(output.value)
     } catch (error) {
-        isError = true;
         errorMsg();
     }
     switch (operator) {
@@ -190,8 +186,9 @@ function fixedExpo() {
     output.value = EvaluateVal.toExponential(10);
 }
 //Clearing the Input
-$(".clear").click(function () {
-    let value = $(this).val();
+
+function clearInput(val) {
+    let value = val;
     //Clear All Value
     if (value == 'ac') {
         output.value = '';
@@ -210,40 +207,41 @@ $(".clear").click(function () {
             document.getElementById('point').disabled = false;
         }
     }
-    // output.focus();
-})
-
+}
 
 // Memory Storage Functions
 
 // Clear the Memory
-$(".mc").click(function () {
+
+document.getElementById('mc').addEventListener('click', function () {
     localStorage.removeItem("Memory")
     memory.innerHTML = localStorage.getItem("Memory");
 })
+
 // Recall the Memory
-$(".mr").click(function () {
+document.getElementById('mc').addEventListener('click', function () {
     output.value = memory.innerText = localStorage.getItem("Memory");
 })
 
-
 // Addtion to Memory
-$(".m-plus").click(function () {
+document.getElementById('m-plus').addEventListener('click', function () {
     localStorage.setItem("Memory", parseFloat(localStorage.getItem("Memory")) + parseFloat(output.value))
     output.value = memory.innerText = localStorage.getItem("Memory");
 })
 
+
 // Subtraction to Memory
-$(".m-minus").click(function () {
+document.getElementById('m-minus').addEventListener('click', function () {
     localStorage.setItem("Memory", parseFloat(localStorage.getItem("Memory")) - parseFloat(output.value))
     output.value = memory.innerText = localStorage.getItem("Memory");
 })
 
 // Store value to Memory
-$(".ms").click(function () {
+document.getElementById('ms').addEventListener('click', function () {
     localStorage.setItem("Memory", parseFloat(Evaluate(output.value)))
     output.value = memory.innerHTML = localStorage.getItem("Memory");
 })
+
 
 // Hide and Show Trigo and Functions
 function myFunction() {
@@ -510,19 +508,18 @@ function Evaluate(equ) {
 
 
 // Run When  user Click on Equal To Sign
-$("#equalTo").click(function () {
+document.getElementById('equalTo').addEventListener('click', function () {
     // Infix To PostFix 
     try {
         output.value = Evaluate(output.value);
     } catch (error) {
         errorMsg();
     }
-    
+
 })
 
 // Evaluate on Press Enter
 window.addEventListener("keydown", function (e) {
-    console.log(e.code,);
     if (e.code === "Enter" || e.code === "NumpadEnter") {
         try {
             output.value = Evaluate(output.value);
@@ -538,7 +535,6 @@ window.addEventListener("keydown", function (e) {
     }
 
     if (e.code === "NumpadAdd" || e.code === "NumpadSubtract" || e.code === "NumpadMultiply" || e.code === "NumpadDivide" || e.code === "Minus") {
-        console.log("disable");
         validDecimal = false;
     }
 })

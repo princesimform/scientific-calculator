@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="./style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" crossorigin="anonymous"
     referrerpolicy="no-referrer"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 </head>
 
 <body>
@@ -36,11 +36,11 @@
       </div>
 
       <div class="row">
-        <button type="button" class="btn btn-light btn-m btn-l mc">MC</button>
-        <button type="button" class="btn btn-light btn-m btn-l mr">MR</button>
-        <button type="button" class="btn btn-light btn-m btn-b m-plus">M+</button>
-        <button type="button" class="btn btn-light btn-m btn-b m-minus">M-</button>
-        <button type="button" class="btn btn-light btn-m btn-b ms">MS</button>
+        <button type="button" class="btn btn-light btn-m btn-l " id="mc">MC</button>
+        <button type="button" class="btn btn-light btn-m btn-l " id="mr">MR</button>
+        <button type="button" class="btn btn-light btn-m btn-b " id="m-plus">M+</button>
+        <button type="button" class="btn btn-light btn-m btn-b " id="m-minus">M-</button>
+        <button type="button" class="btn btn-light btn-m btn-b " id="ms">MS</button>
       </div>
 
       <div class="row">
@@ -98,8 +98,9 @@
         <button type="button" class="btn btn-light  dialpad " id="second">2<sup>nd</sup></button>
         <button type="button" class="btn btn-light  dialpad " onclick="Equation('pi')"> &pi;</button>
         <button type="button" class="btn btn-light  dialpad " onclick="Equation('euler')">e</button>
-        <button type="button" class="btn btn-light  dialpad clear" value="ac"><i class="fa-solid fa-c"></i></button>
-        <button type="button" class="btn btn-light  dialpad clear" value="c"><i
+        <button type="button" class="btn btn-light  dialpad clear" onclick="clearInput('ac')"><i
+            class="fa-solid fa-c"></i></button>
+        <button type="button" class="btn btn-light  dialpad clear" onclick="clearInput('c')"><i
             class="fa-solid fa-delete-left"></i></button>
       </div>
 
@@ -111,7 +112,7 @@
         <button type="button" class="btn btn-light dialpad oneByNum" onclick="Equation('oneByNum')">1/x</button>
         <button type="button" class="btn btn-light dialpad abs">| x |</button>
         <button type="button" class="btn btn-light dialpad " onclick="Equation('exp')">exp</button>
-        <button type="button" class="btn btn-light dialpad operator" value="%">mod</button>
+        <button type="button" class="btn btn-light dialpad " onclick="operator('%')">mod</button>
       </div>
 
       <div class="row">
@@ -119,21 +120,22 @@
           onclick="Equation('cube-root')">3&radic;x</button>
         <button type="button" class="btn btn-light dialpad  btn-change btn-show"
           onclick="Equation('square-root')">&radic;</button>
-        <button type="button" class="btn btn-light dialpad operator" value="(">(</button>
-        <button type="button" class="btn btn-light dialpad operator" value=")">)</button>
+        <button type="button" class="btn btn-light dialpad " onclick='operator("(")'>(</button>
+        <button type="button" class="btn btn-light dialpad " onclick='operator(")")'>)</button>
         <button type="button" class="btn btn-light dialpad fact" onclick="Equation('fact')">n!</button>
-        <button type="button" class="btn btn-light dialpad btn-opr operator" value="/"><i
+        <button type="button" class="btn btn-light dialpad btn-opr" onclick="operator('/')" value="/"><i
             class="fa-solid fa-divide"></i></button>
       </div>
 
       <div class="row">
-        <button type="button" class="btn btn-light dialpad  btn-change btn-hide operator" value="√">y&radic;x</button>
-        <button type="button" class="btn btn-light dialpad operator btn-change btn-show"
-          value="^">x<sup>y</sup></button>
-        <button type="button" class="btn btn-primary btn-white operand" value="7">7</button>
-        <button type="button" class="btn btn-primary btn-white operand" value="8">8</button>
-        <button type="button" class="btn btn-primary btn-white operand" value="9">9</button>
-        <button type="button" class="btn btn-light dialpad btn-opr operator" value="*"><i
+        <button type="button" class="btn btn-light dialpad  btn-change btn-hide "
+          onclick='operator("√")'>y&radic;x</button>
+        <button type="button" class="btn btn-light dialpad  btn-change btn-show"
+          onclick='operator("^")'>x<sup>y</sup></button>
+        <button type="button" class="btn btn-primary btn-white " onclick="operand('7')">7</button>
+        <button type="button" class="btn btn-primary btn-white " onclick="operand('8')">8</button>
+        <button type="button" class="btn btn-primary btn-white " onclick="operand('9')">9</button>
+        <button type="button" class="btn btn-light dialpad btn-opr " onclick='operator("*")'><i
             class="fa-solid fa-xmark"></i></button>
       </div>
 
@@ -142,22 +144,22 @@
           onclick="Equation('pow2')">2<sup>x</sup></button>
         <button type="button" class="btn btn-light dialpad btn-change btn-show"
           onclick="Equation('pow10')">10<sup>x</sup></button>
-        <button type="button" class="btn btn-primary btn-white operand" value="4">4</button>
-        <button type="button" class="btn btn-primary btn-white operand" value="5">5</button>
-        <button type="button" class="btn btn-primary btn-white operand" value="6">6</button>
-        <button type="button" class="btn btn-light dialpad btn-opr operator" value="-"><i
+        <button type="button" class="btn btn-primary btn-white " onclick="operand('4')">4</button>
+        <button type="button" class="btn btn-primary btn-white " onclick="operand('5')">5</button>
+        <button type="button" class="btn btn-primary btn-white " onclick="operand('6')">6</button>
+        <button type="button" class="btn btn-light dialpad btn-opr" onclick='operator("-")'><i
             class="fa-solid fa-minus"></i></button>
       </div>
 
       <div class="row">
-        <button type="button" class="btn btn-light dialpad  btn-change btn-hide operator"
-          value="log">log<small>y</small>x</button>
+        <button type="button" class="btn btn-light dialpad  btn-change btn-hide " value="log"
+          onclick="operator('log')">log<small>y</small>x</button>
         <button type="button" class="btn btn-light dialpad log btn-change btn-show"
           onclick="Equation('log')">log</button>
-        <button type="button" class="btn btn-primary btn-white operand" value="1">1</button>
-        <button type="button" class="btn btn-primary btn-white operand" value="2">2</button>
-        <button type="button" class="btn btn-primary btn-white operand" value="3">3</button>
-        <button type="button" class="btn btn-light dialpad btn-opr operator" value="+"><i
+        <button type="button" class="btn btn-primary btn-white " onclick="operand('1')">1</button>
+        <button type="button" class="btn btn-primary btn-white " onclick="operand('2')">2</button>
+        <button type="button" class="btn btn-primary btn-white " onclick="operand('3')">3</button>
+        <button type="button" class="btn btn-light dialpad btn-opr " onclick="operator('+')"><i
             class="fa-solid fa-plus"></i></button>
       </div>
 
@@ -166,8 +168,8 @@
           onclick="Equation('exp')">e<sup>x</sup></button>
         <button type="button" class="btn btn-light dialpad btn-change btn-show" onclick="Equation('ln')">In</button>
         <button type="button" class="btn btn-primary btn-white dialpad" onclick="plusMinus()">+/-</button>
-        <button type="button" class="btn btn-primary btn-white operand" value="0">0</button>
-        <button type="button" class="btn btn-primary btn-white operand" id="point" value=".">.</button>
+        <button type="button" class="btn btn-primary btn-white " onclick="operand('0')">0</button>
+        <button type="button" class="btn btn-primary btn-white " onclick="operand('.')" id="point">.</button>
         <button type="button" class="btn btn-primary btn-opr btn-equal" id="equalTo"><i
             class="fa-solid fa-equals"></i></button>
       </div>
