@@ -21,6 +21,8 @@
   <div class="container">
     <div class="calculator">
       <!-- Display Of Calculator -->
+      <div class="history my-4" id="History">
+      </div>
       <div class="display">
         <input type="text" id="output" placeholder="0" autocomplete="off">
       </div>
@@ -31,7 +33,7 @@
       </div>
       <!-- Buttons Of Calculator -->
       <div class="row">
-        <button type="button" class="btn btn-light btn-deg" onclick="Deg()">DEG</button>
+        <button type="button" class="btn btn-light btn-deg" id="DEGREG" onclick="Deg()">DEG</button>
         <button type="button" class="btn btn-light btn-fe" onclick="fixedExpo()">F-E</button>
       </div>
 
@@ -110,7 +112,7 @@
         <button type="button" class="btn btn-light dialpad  btn-change btn-show"
           onclick="Equation('square')">x<sup>2</sup></button>
         <button type="button" class="btn btn-light dialpad oneByNum" onclick="Equation('oneByNum')">1/x</button>
-        <button type="button" class="btn btn-light dialpad abs">| x |</button>
+        <button type="button" class="btn btn-light dialpad abs" onclick="Equation('abs')">| x |</button>
         <button type="button" class="btn btn-light dialpad " onclick="Equation('exp')">exp</button>
         <button type="button" class="btn btn-light dialpad " onclick="operator('%')">mod</button>
       </div>

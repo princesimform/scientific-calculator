@@ -73,7 +73,7 @@ function Equation(operator) {
     }
     switch (operator) {
         case "ln":
-            output.value = Evaluate(EvaluateVal + "log2");
+            output.value = Evaluate(EvaluateVal + "log2.718");
             break;
         case "log":
             output.value = Evaluate(EvaluateVal + "log10");
@@ -170,9 +170,12 @@ function Deg() {
     let EvaluateVal = Evaluate(output.value)
     if (redToDegree == "degree") {
         output.value = (EvaluateVal * Math.PI / 180).toFixed(2);
+        document.getElementById('DEGREG').innerHTML = "RED"
         redToDegree = "redians";
     } else {
         output.value = (EvaluateVal * 180 / Math.PI).toFixed(2);
+        document.getElementById('DEGREG').innerHTML = "DEG"
+
         redToDegree = "degree";
     }
 }
@@ -198,7 +201,6 @@ function clearInput(val) {
     if (value == 'c') {
         //Clear single Char 
         output.value = output.value.slice(0, -1)
-        console.log(output.value[output.value.length - 1], output.value.length);
         if (isNaN(output.value[output.value.length - 1]) && output.value[output.value.length - 1] != undefined) {
             document.getElementById('point').disabled = true;
         } else if (output.value[output.value.length] == ".") {
@@ -219,7 +221,7 @@ document.getElementById('mc').addEventListener('click', function () {
 })
 
 // Recall the Memory
-document.getElementById('mc').addEventListener('click', function () {
+document.getElementById('mr').addEventListener('click', function () {
     output.value = memory.innerText = localStorage.getItem("Memory");
 })
 
@@ -396,7 +398,7 @@ EX.InfixToPostfix = function (exp) {
         var c = exp.charAt(i);
         // Add to List if it is Number
         let log = exp.substring(i, i + 3);
-        if (!isNaN(parseInt(c)) || c == "." || i == 0) {
+        if (!isNaN(parseInt(c)) || c == "." || (i == 0 && (exp[i] == "+" || exp[i] == "-"))) {
             var val = c;
             for (var j = i + 1; j < exp.length; j++) {
                 if (!isNaN(exp.charAt(j)) || exp.charAt(j) == ".") {
@@ -409,7 +411,7 @@ EX.InfixToPostfix = function (exp) {
             pfixNumber.push(val);
         }
         else if (log == "log") {
-            stk.push(log);
+            stk.push('log');
             i = i + 2;
         }
         else if (c == "(") {
@@ -430,6 +432,7 @@ EX.InfixToPostfix = function (exp) {
                 stk.push(c)
             }
         }
+
     }
 
     while (stk[stk.length - 1] != '#') {
@@ -445,7 +448,6 @@ EX.InfixToPostfix = function (exp) {
 // Evaluate PostFix and Get Answer
 EX.PostFix = function (exp) {
     this.exp = exp;
-    console.log(exp);
     var numStack = new EX.LinkedStack();
     // Use The Operator and oprand and return evaluated value
     var operate = function (obj, operator) {
@@ -500,10 +502,16 @@ EX.PostFix = function (exp) {
 function Evaluate(equ) {
     var pfix = new EX.InfixToPostfix(equ);
     let postfixEqu = pfix.getPostfix();
+
+    document.getElementById('History').innerHTML += `<p onclick="getHistory('${equ}')">${equ}</p>`
+    document.getElementById('History').scrollTo(0, document.getElementById('History').scrollHeight)
     // Evaluate Equation
     var EquEval = new EX.PostFix(postfixEqu);
     EquEval = EquEval.getResult();
     return EquEval.toFixed(2);
+}
+function getHistory(equation) {
+    output.value += equation
 }
 
 
